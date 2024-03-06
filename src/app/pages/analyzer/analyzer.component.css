@@ -1,0 +1,89 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0; /* Light grey background */
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.5); /* Transparent white background */
+  padding: 20px;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 20px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: Black;
+}
+
+
+.tablinks {
+  border-bottom: 2px solid black;
+}
+
+.container {
+    text-align: center;
+    margin-top: 100px; /* Adjust as needed for positioning */
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ .upload-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .error-message {
+    color: #ff0000; /* Red error message color */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .message {
+    margin-bottom: 20px; /* Add space below the success/processing message */
+  }
+
+  .upload-button {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-right: 80px;
+  }
+
+  .reset-button{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-left: 80px;
+    margin-top : -20px;
+  }
+
+  .success-message{
+    position: fixed;
+    color: green;
+    text-align: center;
+  }
+
+  .upload-progress-msg{
+    position: fixed;
+    color: blue;
+    margin-left : 700px;
+  }
