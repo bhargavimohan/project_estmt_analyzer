@@ -6,10 +6,14 @@ app = FastAPI()
 
 
 @app.post("/save")
-async def upload_file(file: UploadFile = File(...)):
+async def save_file(file: UploadFile = File(...)):
     with open(os.path.join("./pdfs", file.filename), "wb") as buffer:
         buffer.write(await file.read())
     return {"filename": file.filename}
+
+@app.get("/save")
+async def get_save_page():
+    return {"Info" : "Saving pdf currently..." }
 
 # Add CORS middleware
 @app.middleware("http")
