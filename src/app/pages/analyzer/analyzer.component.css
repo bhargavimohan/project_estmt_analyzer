@@ -43,18 +43,16 @@ nav ul li a {
 }
 
  .upload-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: fixed;
+    margin-top : -70px;
+    margin-left : 650px;
   }
 
   .error-message {
     color: #ff0000; /* Red error message color */
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: fixed;
+    margin-left : 700px;
+    margin-top : 20px;
   }
   
   .message {
@@ -65,7 +63,8 @@ nav ul li a {
     text-align: center;
     justify-content: center;
     align-items: center;
-    margin-right: 80px;
+    margin-right: 130px;
+    margin-top : -30px;
   }
 
   .reset-button{

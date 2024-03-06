@@ -46,7 +46,7 @@ export class AnalyzerComponent {
       const formData: FormData = new FormData();
       formData.append('file', this.selectedFile);
       // Handle sucess response here
-      this.http.post('https://eoc0xb5vbzfnpda.m.pipedream.net', formData)
+      this.http.post('http://127.0.0.1:8001/save', formData)
         .subscribe((response : any) => {
           console.log('File uploaded successfully:', response);
           this.successMessage = 'File has been uploaded successfully';
