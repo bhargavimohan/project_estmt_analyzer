@@ -80,10 +80,13 @@ nav ul li a {
     position: fixed;
     color: green;
     text-align: center;
+    margin-left : 650px;
+    margin-top : 20px;
   }
 
   .upload-progress-msg{
     position: fixed;
     color: blue;
     margin-left : 700px;
+    margin-top : 20px;
   }
