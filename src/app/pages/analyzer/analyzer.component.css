@@ -40,6 +40,7 @@ nav ul li a {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
  .upload-container {
@@ -89,3 +90,25 @@ nav ul li a {
     margin-left : 700px;
     margin-top : 20px;
   }
+
+  .upload-fail-message{
+    position: fixed;
+    color: red;
+    margin-left : 600px;
+    margin-top : 20px;
+  }
+
+
+  /* Adjustments for mobile screens */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
+
+/* Additional adjustments for smaller screens if needed */
+@media (max-width: 480px) {
+  .container {
+    /* Additional styles for smaller screens */
+  }
+}
