@@ -13,7 +13,7 @@ async def receive_pdf_file(file: UploadFile = File(...)):
 
 @app.get("/receive")
 async def get_receive_page():
-    return {"Info" : "Saving pdf currently..." }
+    return {"Info" : "Saving pdf and calculating costs..." }
 
 # Add CORS middleware
 @app.middleware("http")

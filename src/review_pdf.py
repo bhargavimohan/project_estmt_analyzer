@@ -1,7 +1,8 @@
 import pdfplumber
 import re
+import json
 from sqlalchemy import func
-from models import Session, MainCategory, SubCategory
+from models import Session, MainCategory, SubCategory, Results
 
 
 WORD_BOUNDARY = r'\b([A-Za-z]+)'
@@ -75,13 +76,59 @@ def classify_costs(desired_cost_list):
     classified_costs_dict.update({'deposit' : deposits})
     return classified_costs_dict
 
-def aggregate_costs(classified_cost_dict):
-    pass
+def compute_category_costs(classified_cost_dict):
+    final_costs_dict = {}
+    for key, value in classified_cost_dict.items():
+        total_cost = 0
+        if isinstance(value, list):
+            for list_item in value:
+                decimal_part = float(list_item.split(" ")[-1].replace(".","").replace(",", "."))
+                total_cost += decimal_part
+            final_costs_dict[key + "_costs"] = round(total_cost,2)
+        else:
+            spl_decimal_part = float(value.split(" ")[-1].replace(".","").replace(",", "."))
+            total_cost = spl_decimal_part
+            final_costs_dict[key + "_costs"] = round(total_cost,2)
+    return final_costs_dict
+
+
+def verify_category_total_costs(final_cost_dict):
+    RHS = 0
+    for key, value in final_cost_dict.items():
+        if key == 'new_balance_costs':
+            LHS = value # from e-stmnt
+        else:
+            RHS += value # analyzer calculated
+    RHS = round(RHS,2)
+    final_cost_dict.update({"total_categories_costs" : RHS})
+    if LHS == RHS:
+        success_message = "TADAAAA!! Costs of all your categories matches the NEUER SALDO :) "
+        final_cost_dict.update({"status_message" : success_message})
+    else:
+        warning_message = "Uh Oh!! Something went wrong :( The costs of your categories does not match the NEUER SALDO in your "  
+        "e-statement, however take a look at the categories and their respective costs while I check what went wrong"
+        final_cost_dict.update({"status_message" : warning_message})
+    return final_cost_dict
+    
+    
 
 if __name__ == "__main__":
-    file_path = './src/pdfs/October 2023.pdf'
+    file_path = './src/pdfs/January 2024.pdf'
     # read pdf
     pdf_extraction = read_pdf(file_path)
+    # extract the categories from pdf
     desired_cost_list = extract_desired_costs(pdf_extraction)
+    # categorize items under their main category
     classified_cost_dict = classify_costs(desired_cost_list) 
-    final_cost_json = aggregate_costs(classified_cost_dict)
+    # calculate individual category's costs
+    final_cost_dict= compute_category_costs(classified_cost_dict)
+    # Final tally
+    output_dict = verify_category_total_costs(final_cost_dict)
+    # jsonify
+    output_json = json.dumps(output_dict)
+
+    # commit results to db:
+    results = Results(file_name=file_path.split("/")[-1], output_json=output_json)
+    Session.add(results)
+    Session.commit()
+

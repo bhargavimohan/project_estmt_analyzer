@@ -2,3 +2,5 @@ esa_dev.db
 .vscode/.env
 .vscode/launch.json
 .vscode/settings.json
+DB/esa_dev.sql
+DB/esa_dev.sql

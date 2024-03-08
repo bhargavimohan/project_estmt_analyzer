@@ -25,15 +25,22 @@ class MainCategory(Base):
     __tablename__ = 'main_categories' 
 
     id = Column(Integer, primary_key=True)
-    main_category = Column(String, unique=True)
+    main_category = Column(String(collation='NOCASE'), unique=True)
 
 
 class SubCategory(Base):
     __tablename__ = 'sub_categories'
 
     id = Column(Integer, primary_key=True)
-    sub_category = Column(String)
+    sub_category = Column(String(collation='NOCASE'))
     main_category_id = Column(Integer, ForeignKey('main_categories.id'))
+
+class Results(Base):
+    __tablename__ = 'results'
+    
+    id = Column(Integer, primary_key=True)
+    file_name = Column(String(collation='NOCASE'))
+    output_json = Column(String(collation='NOCASE'))
 
 
 # #For testing and running the models directly
