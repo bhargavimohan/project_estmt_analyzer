@@ -14,7 +14,8 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 
 Base = declarative_base()
 
-DATABASE_URL = "sqlite:///DB/esa_dev.db"
+DATABASE_URL = "sqlite:///../DB/esa_dev.db"
+#DATABASE_URL = "sqlite:///DB/esa_dev.db"
 
 engine = create_engine(DATABASE_URL, echo=False)
 # Creating a scoped session factory

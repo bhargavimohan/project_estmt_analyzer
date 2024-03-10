@@ -65,17 +65,23 @@ INSERT INTO sub_categories (sub_category, main_category_id) VALUES ('Barlin Done
 
 
 
-
+CREATE TABLE results (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    file_name TEXT COLLATE NOCASE,
+    output_json TEXT COLLATE NOCASE
+);
 
 
 
 DELETE FROM sub_categories WHERE sub_category = 'AMZN';
 
-
-UPDATE sub_categories
-SET sub_category = 'SumUp *Barlin Doner'
-WHERE id = 29;
-
-DROP table main_categories
 DROP table sub_categories
+
+SELECT * from results;
+
+-- Delete all records from the table
+DELETE FROM results;
+
+-- Reset the ID key
+DELETE FROM sqlite_sequence WHERE name = 'results';
 

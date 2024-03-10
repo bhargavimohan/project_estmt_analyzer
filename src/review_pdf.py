@@ -1,7 +1,10 @@
 import pdfplumber
 import re
 import json
+import os
 from sqlalchemy import func
+import requests
+from render_results import entry_exists_in_database
 from models import Session, MainCategory, SubCategory, Results
 
 
@@ -110,25 +113,29 @@ def verify_category_total_costs(final_cost_dict):
         final_cost_dict.update({"status_message" : warning_message})
     return final_cost_dict
     
-    
+def main (estmnt_file_path):
+    is_pdf_reviewed = entry_exists_in_database(estmnt_file_path)
+    if is_pdf_reviewed is False:
+        estmnt_full_file_path = os.path.join("./pdfs/", estmnt_file_path)
+        # read pdf
+        pdf_extraction = read_pdf(estmnt_full_file_path)
+        # extract the categories from pdf
+        desired_cost_list = extract_desired_costs(pdf_extraction)
+        # categorize items under their main category
+        classified_cost_dict = classify_costs(desired_cost_list) 
+        # calculate individual category's costs
+        final_cost_dict= compute_category_costs(classified_cost_dict)
+        # Final tally
+        output_dict = verify_category_total_costs(final_cost_dict)
+        # jsonify
+        output_json = json.dumps(output_dict) 
+        results = Results(file_name=estmnt_file_path, output_json=output_json)
+        Session.add(results)
+        Session.commit()
 
 if __name__ == "__main__":
-    file_path = './src/pdfs/January 2024.pdf'
-    # read pdf
-    pdf_extraction = read_pdf(file_path)
-    # extract the categories from pdf
-    desired_cost_list = extract_desired_costs(pdf_extraction)
-    # categorize items under their main category
-    classified_cost_dict = classify_costs(desired_cost_list) 
-    # calculate individual category's costs
-    final_cost_dict= compute_category_costs(classified_cost_dict)
-    # Final tally
-    output_dict = verify_category_total_costs(final_cost_dict)
-    # jsonify
-    output_json = json.dumps(output_dict)
-
+    #estmnt_file_path = "October 2023.pdf"
+    main(estmnt_file_path)
     # commit results to db:
-    results = Results(file_name=file_path.split("/")[-1], output_json=output_json)
-    Session.add(results)
-    Session.commit()
+    
 
