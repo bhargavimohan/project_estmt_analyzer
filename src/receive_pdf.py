@@ -5,6 +5,8 @@ import asyncio
 from review_pdf import main
 from fastapi.responses import JSONResponse
 from render_results import entry_exists_in_database
+from models import Results, Session
+
 
 app = FastAPI()
 
@@ -28,6 +30,11 @@ async def receive_pdf_file(file: UploadFile = File(...)):
 @app.get("/receive")
 async def get_receive_page():
     return {"Info" : "Saving pdf and calculating costs..." }
+
+@app.get("/analyzed-pdfs")
+async def get_analyzed_pdfs_list():
+    items = [{item.file_name: item.output_json} for item in Session.query(Results).all()]
+    return {"items" : items }
 
     
 # Add CORS middleware
