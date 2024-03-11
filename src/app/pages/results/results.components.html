@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a routerLink="/home"  routerLinkActive="active">Home</a></li>
+            <li><a routerLink="/analyzer" routerLinkActive="active">Analyzer</a></li>
+            <li><a routerLink="/results" routerLinkActive="active">Results</a></li>
+        </ul>
+    </nav>
+    <router-outlet></router-outlet>
+    <div class="results">
+        <h2>Results</h2>
+    </div>
+
+    <!-- <div class="dropdown-container">
+        <select (change)="onSelectItem($event.target.value)">
+          <option value="" disabled selected>Select Item</option>
+          <option *ngFor="let item of items" [ngValue]="item">{{ Object.keys(item)[0] }}</option>
+        </select>
+      </div>
+      <div *ngIf="selectedItem">
+        <pre>{{ selectedItem | json }}</pre>
+      </div> -->
+
+
+
+    <div class="dropdown-container">
+        <select>
+          <option value="" disabled selected>Select e-stmnt</option>
+          <!-- <option *ngFor="let item of items" [value]="item.id">{{ item.name }}</option> -->
+        </select>
+      </div>
+</body>
+</html>

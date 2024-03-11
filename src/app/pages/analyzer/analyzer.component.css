@@ -52,7 +52,7 @@ nav ul li a {
   .error-message {
     color: #ff0000; /* Red error message color */
     position: fixed;
-    margin-left : 700px;
+    margin-left : 650px;
     margin-top : 20px;
   }
   
@@ -96,6 +96,13 @@ nav ul li a {
     color: red;
     margin-left : 600px;
     margin-top : 20px;
+  }
+
+  .analysis-status{
+    position: fixed;
+    color: green;
+    margin-left : 600px;
+    margin-top : 40px;
   }
 
 

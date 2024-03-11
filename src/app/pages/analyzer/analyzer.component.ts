@@ -3,6 +3,7 @@ import { Router, RouterOutlet, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
+
 @Component({
   selector: 'app-analyzer',
   standalone: true,
@@ -20,7 +21,8 @@ export class AnalyzerComponent {
   errorMessage: string = '';
   successMessage: string = '';
   uploadInProgress: boolean = false; 
-  
+  uploadFailMessage : string = ''
+  analysisCompleteMessage : string = ''
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
@@ -41,18 +43,22 @@ export class AnalyzerComponent {
       return;
     }
     this.uploadInProgress = true;
+    this.analysisCompleteMessage = ''
     {
   
       const formData: FormData = new FormData();
       formData.append('file', this.selectedFile);
       // Handle sucess response here
-      this.http.post('http://127.0.0.1:8001/save', formData)
-        .subscribe((response : any) => {
+      this.http.post('http://127.0.0.1:8001/receive', formData)
+        .subscribe(response  => {
           console.log('File uploaded successfully:', response);
-          this.successMessage = 'File has been uploaded successfully';
+          console.log((response as any).message)
+          this.successMessage = 'File was uploaded successfully, analysis has begun . . .';
           this.uploadInProgress = false;
+          this.analysisCompleteMessage = (response as any).message
         }, (error : any) => {
           console.error('Error uploading file:', error);
+          this.uploadFailMessage = 'Upload error, Try again after sometime . . .'
           this.successMessage = '';
           this.uploadInProgress = false; 
           // Handle error response here
@@ -64,6 +70,8 @@ onReset(event: any) {
   this.selectedFile = null;
   this.errorMessage = '';
   this.successMessage = '';
+  this.uploadFailMessage = ''
+  this.analysisCompleteMessage = ''
   const fileInput = document.getElementById('fileInput') as HTMLInputElement;
   if (fileInput) {
     fileInput.value = ''; // Clear the selected file

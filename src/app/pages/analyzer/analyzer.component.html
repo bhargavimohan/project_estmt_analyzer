@@ -8,8 +8,9 @@
   <nav>
     <ul>
 
-       <li><a routerLink="/home"  routerLinkActive="active">Home</a></li>
-        <!-- <li><a routerLink="/analyzer" routerLinkActive="active">Analyzer</a></li> -->
+      <li><a routerLink="/home"  routerLinkActive="active">Home</a></li>
+      <li><a routerLink="/analyzer" routerLinkActive="active">Analyzer</a></li>
+      <li><a routerLink="/results" routerLinkActive="active">Results</a></li>
     </ul>
 </nav>
 <router-outlet></router-outlet>
@@ -23,11 +24,15 @@
 
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
-    <div class="upload-button"><button (click)="onUpload($event)">Upload</button></div>
+    <div class="upload-button"><button (click)="onUpload($event)">Analyze</button></div>
 
     <div *ngIf="uploadInProgress" class=upload-progress-msg>Upload is in progress...</div>
 
     <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
+    <div *ngIf="analysisCompleteMessage" class="analysis-status">Analysis has been completed. Please visit the results page for more info.</div>
+
+    
 
     <div *ngIf="uploadFailMessage" class="upload-fail-message">{{ uploadFailMessage }}</div>
     
