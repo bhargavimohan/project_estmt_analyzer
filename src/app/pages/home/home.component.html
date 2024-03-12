@@ -7,14 +7,22 @@
 <body>
     <nav>
         <ul>
-            <li><a routerLink="/home"  routerLinkActive="active">Home</a></li>
-            <li><a routerLink="/analyzer" routerLinkActive="active">Analyzer</a></li>
-            <li><a routerLink="/results" routerLinkActive="active">Results</a></li>
+            <li class="active-tab"><a routerLink="/home">Home</a></li>
+            <li ><a routerLink="/analyzer">Analyzer</a></li>
+            <li ><a routerLink="/results">Results</a></li>
         </ul>
     </nav>
     <router-outlet></router-outlet>
     <div class="welcome-text">
-        <h2>Welcome to e-statements Analyzer</h2>
+        <h2>Welcome to E-statement Analyzer</h2>
     </div>
 </body>
+<div class="paragraph">
+    <p> 
+        "E-Statement Analyzer" is a user-friendly app that simplifies financial management by automatically 
+        categorizing your credit card expenses from PDF statements. It breaks down your spending into categories 
+        like groceries, medical costs, and more, helping you understand your monthly expenses at a glance. 
+        Plus, it verifies your expenses against the provided new balance, ensuring accuracy and helping you spot any 
+        discrepancies. Stay in control of your finances effortlessly with E-Statement Analyzer 💶🎉</p>
+</div>
 </html>

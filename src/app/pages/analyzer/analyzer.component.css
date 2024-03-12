@@ -106,16 +106,7 @@ nav ul li a {
   }
 
 
-  /* Adjustments for mobile screens */
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-}
 
-/* Additional adjustments for smaller screens if needed */
-@media (max-width: 480px) {
-  .container {
-    /* Additional styles for smaller screens */
+  .active-tab {
+    text-decoration: underline;
   }
-}

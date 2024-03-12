@@ -16,13 +16,19 @@ import { CommonModule } from '@angular/common';
 
 export class AnalyzerComponent {
 
+  selectedTab = "Analyzer"
   selectedFile: File | null = null;
   uploadSuccessMessage: string = '';
   errorMessage: string = '';
   successMessage: string = '';
   uploadInProgress: boolean = false; 
-  uploadFailMessage : string = ''
-  analysisCompleteMessage : string = ''
+  uploadFailMessage : string = '';
+  analysisCompleteMessage : string = '';
+
+  makeActive(tab: string) {
+    this.selectedTab = tab;
+  }
+  
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];

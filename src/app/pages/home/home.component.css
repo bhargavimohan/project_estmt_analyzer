@@ -38,5 +38,19 @@ nav ul li a {
     align-items: center;
 }
 
+.paragraph{
+    margin-top: 10px;
+    font-size: 16px;
+    text-align: justify; /* Align text justified */
+    margin-left: auto; /* Center the paragraph */
+    margin-right: auto; /* Center the paragraph */
+    max-width: 600px; /* Limit the width of the paragraph */
+    padding: 0 20px; /* Add padding on both left and right sides */
+    white-space: pre-wrap; /* Allow text to wrap */
+    overflow: hidden; /* Hide overflow */
+    word-break: break-word; /* Allow breaking words if necessary */
+}
 
-
+.active-tab {
+    text-decoration: underline;
+  }

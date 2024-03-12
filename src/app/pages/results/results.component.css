@@ -1,61 +1,75 @@
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0; /* Light grey background */
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0; /* Light grey background */
 }
 
 nav {
-    position: fixed;
-    top: 0;
-    right: 0;
-    background-color: rgba(255, 255, 255, 0.5); /* Transparent white background */
-    padding: 20px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.5); /* Transparent white background */
+  padding: 20px;
 }
 
 nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 nav ul li {
-    display: inline;
-    margin-right: 20px;
+  display: inline;
+  margin-right: 20px;
 }
 
 nav ul li a {
-    text-decoration: none;
-    color: black;
-    
-  }
+  text-decoration: none;
+  color: black;
+  
+}
 
 .results {
-    text-align: center;
-    margin-top: 100px; /* Adjust as needed for positioning */
-    height: 270px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  text-align: center;
+  margin-top: 100px; /* Adjust as needed for positioning */
+  height: 270px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .dropdown-container{
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    display : flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display : flex;
+  margin-left: -150px;
+  margin-top : -40px;
 }
 
 .table-display{
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th, td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  th {
-    background-color: #f2f2f2;
-  }
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.reset-button{
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin-left: 80px;
+  margin-top : -20px;
+}
+
+.active-tab {
+  text-decoration: underline;
+}

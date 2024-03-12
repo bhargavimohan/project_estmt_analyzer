@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterOutlet, RouterLink } from '@angular/router';
+import { RouterModule , RouterOutlet, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -20,7 +20,7 @@ export class ResultsComponent implements OnInit {
   items: { [fileName: string]: any } = {}; // Dictionary to store file name and its corresponding JSON data
   excludedItems: { key: string, value: string }[] = [];
   fileSelected : string = ''
-  excludedKeys: string[] = ['status_message', 'new_balance_costs', 'total_categories_costs'];
+  excludedKeys: string[] = ['E-stmnt Analyzer Status', 'New Balance', 'Cost of ALL categories'];
 
   constructor(private http: HttpClient) { }
 
@@ -52,6 +52,9 @@ export class ResultsComponent implements OnInit {
           const jsonString = this.items[key][fileName];
           if (jsonString) {
             this.fileDescription = JSON.parse(jsonString)
+            console.log(Object.keys(JSON.parse(jsonString))
+            .filter(key => this.excludedKeys.includes(key))
+            .map(key => ({ key, value: JSON.parse(jsonString)[key]})));
             this.excludedItems = Object.keys(JSON.parse(jsonString))
             .filter(key => this.excludedKeys.includes(key))
             .map(key => ({ key, value: JSON.parse(jsonString)[key] }))
@@ -69,4 +72,16 @@ export class ResultsComponent implements OnInit {
       this.excludedItems = [];
     }
   }
+
+  onReset(event: any) {
+    this.fileDescription = [];
+    this.excludedItems = [];
+    this.fileSelected = '';
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = ''; // Clear the selected file
+  }
+  }
+
+
 }

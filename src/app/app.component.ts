@@ -4,12 +4,12 @@ import { HomeComponent } from './pages/home/home.component';
 import { AnalyzerComponent } from './pages/analyzer/analyzer.component'; 
 import { ResultsComponent } from './pages/results/results.component'; 
 import { HttpClientModule } from '@angular/common/http';
-
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HomeComponent, AnalyzerComponent, ResultsComponent ,HttpClientModule],
+  imports: [RouterOutlet, HomeComponent, AnalyzerComponent, ResultsComponent ,HttpClientModule,FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
