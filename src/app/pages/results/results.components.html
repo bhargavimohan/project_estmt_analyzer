@@ -16,24 +16,36 @@
     <div class="results">
         <h2>Results</h2>
     </div>
-
     <!-- <div class="dropdown-container">
-        <select (change)="onSelectItem($event.target.value)">
-          <option value="" disabled selected>Select Item</option>
-          <option *ngFor="let item of items" [ngValue]="item">{{ Object.keys(item)[0] }}</option>
-        </select>
-      </div>
-      <div *ngIf="selectedItem">
-        <pre>{{ selectedItem | json }}</pre>
-      </div> -->
-
-
+      <select [(ngModel)]="selectedFileName" (ngModelChange)="onSelectFileName($event)">
+        <option value="" disabled selected>Select e-stmnt</option>
+        <option *ngFor="let fileName of fileNames" [value]="fileName">{{ fileName }}</option>
+      </select>
+  </div> -->
 
     <div class="dropdown-container">
-        <select>
+        <select [(ngModel)]="fileSelected" (ngModelChange)="onSelectFileName($event)">
           <option value="" disabled selected>Select e-stmnt</option>
-          <!-- <option *ngFor="let item of items" [value]="item.id">{{ item.name }}</option> -->
+          <option *ngFor="let fileName of fileNames" [value]="fileName">{{ fileName }}</option> 
         </select>
-      </div>
+    </div>
 </body>
+<div class=table-display *ngIf="fileDescription">
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Costs</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of fileDescription|keyvalue">
+        <td *ngIf="item.key !== 'specificKey'">{{ item.key }}</td>
+        <td *ngIf="item.key !== 'specificKey'">{{ item.value }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
 </html>
