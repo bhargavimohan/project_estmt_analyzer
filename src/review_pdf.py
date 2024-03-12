@@ -51,13 +51,13 @@ def classify_costs(desired_cost_list):
     for sub_category_str in desired_cost_list:
         sub_category = get_sub_category(sub_category_str)
         if 'ALTER SALDO' in sub_category_str: # record the old balance
-            classified_costs_dict.update({'old_balance' : sub_category_str})
+            classified_costs_dict.update({'Old Balance' : sub_category_str})
         elif 'EINZAHLUNG' in sub_category_str: # record the deposits
             deposits.append(sub_category_str)
         elif 'NEUER SALDO' in sub_category_str: # record the new balance
-            classified_costs_dict.update({'new_balance' : sub_category_str})
+            classified_costs_dict.update({'New Balance' : sub_category_str})
         elif 'SOLLZINSEN' in sub_category_str: # record the new balance
-            classified_costs_dict.update({'Debit_interest' : sub_category_str})
+            classified_costs_dict.update({'Debit Interest' : sub_category_str})
         elif 'Gesetzliche Vertreter' in sub_category_str: # skip the page footer
             continue
         elif sub_category:
@@ -76,7 +76,7 @@ def classify_costs(desired_cost_list):
             classified_costs_dict["Others"].append(sub_category_str)
             print("No subcategory for  " + sub_category_str)
 
-    classified_costs_dict.update({'deposit' : deposits})
+    classified_costs_dict.update({'Deposit' : deposits})
     return classified_costs_dict
 
 def compute_category_costs(classified_cost_dict):
@@ -87,30 +87,30 @@ def compute_category_costs(classified_cost_dict):
             for list_item in value:
                 decimal_part = float(list_item.split(" ")[-1].replace(".","").replace(",", "."))
                 total_cost += decimal_part
-            final_costs_dict[key + "_costs"] = round(total_cost,2)
+            final_costs_dict[key] = round(total_cost,2)
         else:
             spl_decimal_part = float(value.split(" ")[-1].replace(".","").replace(",", "."))
             total_cost = spl_decimal_part
-            final_costs_dict[key + "_costs"] = round(total_cost,2)
+            final_costs_dict[key] = round(total_cost,2)
     return final_costs_dict
 
 
 def verify_category_total_costs(final_cost_dict):
     RHS = 0
     for key, value in final_cost_dict.items():
-        if key == 'new_balance_costs':
+        if key == 'New Balance':
             LHS = value # from e-stmnt
         else:
             RHS += value # analyzer calculated
     RHS = round(RHS,2)
-    final_cost_dict.update({"total_categories_costs" : RHS})
+    final_cost_dict.update({"Cost of ALL categories" : RHS})
     if LHS == RHS:
-        success_message = "TADAAAA!! Costs of all your categories matches the NEUER SALDO :) "
-        final_cost_dict.update({"status_message" : success_message})
+        success_message = "TADAAAA!!Individual costs combined match the New Balance 😊"
+        final_cost_dict.update({"E-stmnt Analyzer Status" : success_message})
     else:
-        warning_message = "Uh Oh!! Something went wrong :( The costs of your categories does not match the NEUER SALDO in your "  
-        "e-statement, however take a look at the categories and their respective costs while I check what went wrong"
-        final_cost_dict.update({"status_message" : warning_message})
+        warning_message = "Uh Oh!!We've encountered an issue 😬 Individual costs put together does not align with the New Balance in your "  
+        "e-statement"
+        final_cost_dict.update({"E-stmnt Analyzer Status" : warning_message})
     return final_cost_dict
     
 def main (estmnt_file_path):
@@ -132,9 +132,10 @@ def main (estmnt_file_path):
         results = Results(file_name=estmnt_file_path, output_json=output_json)
         Session.add(results)
         Session.commit()
+        print("Data commited to DB successfully")
 
 if __name__ == "__main__":
-    #estmnt_file_path = "October 2023.pdf"
+    estmnt_file_path = "October 2023.pdf"
     main(estmnt_file_path)
     # commit results to db:
     
