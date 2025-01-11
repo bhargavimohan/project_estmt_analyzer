@@ -1,10 +1,15 @@
-from models import Session, Results, MainCategory, SubCategory
+from models import (
+    Session,
+    Results,
+    MainCategory,
+    SubCategory,
+)
 import re
 
 WORD_BOUNDARY = r"\b([A-Za-z]+)"
 
 
-def entry_exists_in_database(estmnt_file_path: str) -> bool:
+def entry_exists_in_database(estmnt_file_path: str):
     result = (
         Session.query(Results).filter(Results.file_name == estmnt_file_path).first()
     )

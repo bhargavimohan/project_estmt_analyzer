@@ -1,5 +1,4 @@
 import pdfplumber
-
 import json
 import os
 from sqlalchemy import func

@@ -1,4 +1,4 @@
--- Active: 1709767233807@@127.0.0.1@3306
+-- Active: 1736509016941@@127.0.0.1@3306
 
 
 -- Create the main_categories table
@@ -77,15 +77,23 @@ CREATE TABLE results (
 
 
 
-DELETE FROM sub_categories WHERE sub_category = 'AMZN';
 
-DROP table sub_categories
+
+-- Reset the ID key
+DELETE FROM sqlite_sequence WHERE name = 'results';
+
+
+-- Drop the sub_categories table
+DROP TABLE IF EXISTS sub_categories;
+
+-- Drop the main_categories table
+DROP TABLE IF EXISTS main_categories;
+
+-- Drop the results table
+DROP TABLE IF EXISTS results;
+
 
 SELECT * from results;
 
 -- Delete all records from the table
 DELETE FROM results;
-
--- Reset the ID key
-DELETE FROM sqlite_sequence WHERE name = 'results';
-
