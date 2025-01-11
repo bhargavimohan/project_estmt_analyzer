@@ -24,6 +24,7 @@ INSERT INTO main_categories (main_category) VALUES ('E-provisions');
 INSERT INTO main_categories (main_category) VALUES ('Cash-transfers');
 INSERT INTO main_categories (main_category) VALUES ('Food-orders');
 INSERT INTO main_categories (main_category) VALUES ('Others');
+INSERT INTO main_categories (main_category) VALUES ('Social-media');
 
 
 -- Insert rows into sub_categories table
@@ -38,6 +39,7 @@ INSERT INTO sub_categories (sub_category, main_category_id) VALUES ('TEDI', 1);
 INSERT INTO sub_categories (sub_category, main_category_id) VALUES ('Lidl', 1);
 INSERT INTO sub_categories (sub_category, main_category_id) VALUES ('Jaffna', 1); 
 INSERT INTO sub_categories (sub_category, main_category_id) VALUES ('Rossmann', 1);
+
 
 INSERT INTO sub_categories (sub_category, main_category_id) VALUES ('Apotheke', 2);
 
@@ -62,6 +64,8 @@ INSERT INTO sub_categories (sub_category, main_category_id) VALUES ('INDIAN PALA
 INSERT INTO sub_categories (sub_category, main_category_id) VALUES ('Swiggy', 6);
 INSERT INTO sub_categories (sub_category, main_category_id) VALUES ('SUBWAY', 6); 
 INSERT INTO sub_categories (sub_category, main_category_id) VALUES ('Barlin Doner', 6);
+
+INSERT INTO sub_categories (sub_category, main_category_id) VALUES ('Twitter Online Ads', 7);
 
 
 

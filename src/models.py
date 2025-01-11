@@ -15,7 +15,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 Base = declarative_base()
 
 DATABASE_URL = "sqlite:///../DB/esa_dev.db"
-#DATABASE_URL = "sqlite:///DB/esa_dev.db"
+# DATABASE_URL = "sqlite:///DB/esa_dev.db"
 
 engine = create_engine(DATABASE_URL, echo=False)
 # Creating a scoped session factory
@@ -23,30 +23,31 @@ Session = scoped_session(sessionmaker(bind=engine))
 
 
 class MainCategory(Base):
-    __tablename__ = 'main_categories' 
+    __tablename__ = "main_categories"
 
     id = Column(Integer, primary_key=True)
-    main_category = Column(String(collation='NOCASE'), unique=True)
+    main_category = Column(String(collation="NOCASE"), unique=True)
 
 
 class SubCategory(Base):
-    __tablename__ = 'sub_categories'
+    __tablename__ = "sub_categories"
 
     id = Column(Integer, primary_key=True)
-    sub_category = Column(String(collation='NOCASE'))
-    main_category_id = Column(Integer, ForeignKey('main_categories.id'))
+    sub_category = Column(String(collation="NOCASE"))
+    main_category_id = Column(Integer, ForeignKey("main_categories.id"))
+
 
 class Results(Base):
-    __tablename__ = 'results'
-    
+    __tablename__ = "results"
+
     id = Column(Integer, primary_key=True)
-    file_name = Column(String(collation='NOCASE'))
-    output_json = Column(String(collation='NOCASE'))
+    file_name = Column(String(collation="NOCASE"))
+    output_json = Column(String(collation="NOCASE"))
 
 
 # #For testing and running the models directly
 # if __name__ == "__main__":
-    
+
 #     engine = create_engine(DATABASE_URL)
 #     # Creating a scoped session factory
 #     #Session = scoped_session(sessionmaker(bind=engine))
