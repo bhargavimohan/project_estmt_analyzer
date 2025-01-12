@@ -40,9 +40,14 @@ async def receive_pdf_file(file: UploadFile = File(...)):
 
     is_analysis_complete = entry_exists_in_database(file.filename)
     if is_analysis_complete:
-        return JSONResponse(content={"message": "Analysis completed"})
+        return JSONResponse(
+            content={"message": "File received and analysis may have been completed"}
+        )
     else:
-        return JSONResponse(content={"message": "Analysis incomplete"}, status_code=202)
+        return JSONResponse(
+            content={"message": "File not received or analysis incomplete"},
+            status_code=202,
+        )
 
 
 @app.get("/analyzed-pdfs")
