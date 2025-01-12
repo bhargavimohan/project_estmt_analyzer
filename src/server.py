@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 import aiofiles
 from pathlib import Path
 from review_pdf import process_pdf
+from fastapi.middleware.cors import CORSMiddleware
 from db_manager import (
     entry_exists_in_database,
     get_analyzed_pdf_from_db,
@@ -16,9 +17,23 @@ pdfs_path = Path("./pdfs")
 pdfs_path.mkdir(exist_ok=True)
 
 
+# Add CORS middleware
+origins = [
+    "http://localhost:4200",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 @app.get("/")
 async def root():
-    return {"message": "Running PDF Analyzer"}
+    return JSONResponse(content={"message": "Running PDF Analyzer"})
 
 
 @app.post("/receive")
@@ -89,11 +104,3 @@ def delete_pdf_entry(pdf_name: str):
             raise HTTPException(status_code=404, detail="File not found")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to delete file: {e}")
-
-
-# Add CORS middleware
-@app.middleware("http")
-async def add_cors_header(request, call_next):
-    response = await call_next(request)
-    response.headers["Access-Control-Allow-Origin"] = "*"
-    return response
