@@ -1,7 +1,7 @@
 # Project Estmt Analyzer
 
 ## Overview
-Project Estmt Analyzer is a FastAPI-based application for uploading and analyzing credit card statements. Please note that this is a personal/family project, and it currently works only with my own credit card statements or  for users who are using the service provided by [Gebührenfrei]
+Project Estmt Analyzer is a FastAPI-based application for uploading and analyzing credit card statements. Please note that this is a personal/family project, and it currently works only with my own credit card statements or for users who are using the service provided by [Gebührenfrei]
 
 ## Features
 - Upload PDF files for analysis
@@ -12,7 +12,7 @@ Project Estmt Analyzer is a FastAPI-based application for uploading and analyzin
 
 ### Limitations
 
-Please note that the application is currently tailored to work with credit card statements from users of [Gebührenfrei]. It does not support other credit card providers or formats. 
+Please note that the application is currently implemented to work with credit card statements from users of [Gebührenfrei]. It does not support other credit card providers or formats. 
 
 ## Installation
 
