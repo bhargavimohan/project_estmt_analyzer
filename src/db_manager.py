@@ -5,15 +5,22 @@ from models import (
     SubCategory,
 )
 import re
+from sqlalchemy.sql import func, extract
 
 WORD_BOUNDARY = r"\b([A-Za-z]+)"
 
 
 def entry_exists_in_database(estmnt_file_path: str):
-    result = (
-        Session.query(Results).filter(Results.file_name == estmnt_file_path).first()
-    )
-    return result is not None
+    try:
+        result = (
+            Session.query(Results).filter(Results.file_name == estmnt_file_path).first()
+        )
+        return result is not None
+    except Exception as e:
+        Session.rollback()
+        raise e
+    finally:
+        Session.close()
 
 
 def get_sub_category(sub_category_str):
@@ -37,6 +44,8 @@ def get_sub_category(sub_category_str):
     except Exception as e:
         print(f"Error getting sub category for {sub_category_str}: {e}")
         return None
+    finally:
+        Session.close()
 
 
 def save_db_results(estmnt_file_path, output_json):
@@ -47,13 +56,78 @@ def save_db_results(estmnt_file_path, output_json):
         print("Data committed to DB successfully")
     except Exception as e:
         print(f"Error saving results to DB: {e}")
+    finally:
+        Session.close()
 
 
 def get_all_main_categories():
-    return Session.query(MainCategory).all()
+    try:
+        return Session.query(MainCategory).all()
+    except Exception as e:
+        Session.rollback()
+        raise e
+    finally:
+        Session.close()
 
 
 def get_main_category_name(main_category_id):
-    return (
-        Session.query(MainCategory).filter(MainCategory.id == main_category_id).first()
-    )
+    try:
+        return (
+            Session.query(MainCategory)
+            .filter(MainCategory.id == main_category_id)
+            .first()
+        )
+    except Exception as e:
+        Session.rollback()
+        raise e
+    finally:
+        Session.close()
+
+
+def delete_pdf_entry_from_db(file_name: str):
+    try:
+        entry = Session.query(Results).filter(Results.file_name == file_name).first()
+        if entry:
+            Session.delete(entry)
+            Session.commit()
+            return True
+        return False
+    except Exception as e:
+        Session.rollback()
+        raise e
+    finally:
+        Session.close()
+
+
+def get_analyzed_pdf_from_db(file_name: str):
+    session = Session()
+    try:
+        entry = session.query(Results).filter(Results.file_name == file_name).first()
+        if entry:
+            return entry.output_json
+        return None
+    except Exception as e:
+        session.rollback()
+        raise e
+    finally:
+        session.close()
+
+
+def get_analyzed_pdfs_list_from_db(year: int = None):
+    try:
+        if year:
+            pdf_list = [
+                {item.file_name: item.output_json}
+                for item in Session.query(Results).filter(
+                    extract("year", Results.analyzed_at) == year
+                )
+            ]
+        else:
+            pdf_list = [
+                {item.file_name: item.output_json}
+                for item in Session.query(Results).all()
+            ]
+        return pdf_list
+    except Exception as e:
+        Session.rollback()
+        raise e

@@ -43,7 +43,3 @@ class Results(Base):
     analyzed_at = Column(
         DateTime(timezone=True), server_default=func.now()
     )  # database-side timestamp
-
-
-def init_db():
-    Base.metadata.create_all(bind=engine)

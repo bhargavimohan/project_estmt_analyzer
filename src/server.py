@@ -1,11 +1,14 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException, Query
 from fastapi.responses import JSONResponse
 import aiofiles
 from pathlib import Path
 from review_pdf import process_pdf
-from db_manager import entry_exists_in_database
-from models import Results, Session, init_db
-
+from db_manager import (
+    entry_exists_in_database,
+    get_analyzed_pdf_from_db,
+    delete_pdf_entry_from_db,
+    get_analyzed_pdfs_list_from_db,
+)
 
 app = FastAPI()
 
@@ -51,16 +54,41 @@ async def receive_pdf_file(file: UploadFile = File(...)):
 
 
 @app.get("/analyzed-pdfs")
-async def get_analyzed_pdfs_list():
+async def get_analyzed_pdfs_list(
+    year: int = Query(None, description="Filter results by year")
+):
     try:
-        items = [
-            {item.file_name: item.output_json} for item in Session.query(Results).all()
-        ]
+        items = get_analyzed_pdfs_list_from_db(year)
+        if len(items) == 0:
+            return JSONResponse(content={"message": "No PDFs analyzed yet!"})
         return {"items": items}
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Failed to retrieve analyzed PDFs: {e}"
         )
+
+
+@app.get("/analyze/{pdf_name}")
+def get_analyzed_pdf(pdf_name: str):
+    try:
+        analysis = get_analyzed_pdf_from_db(pdf_name)
+        if analysis:
+            return JSONResponse(content=analysis)
+        else:
+            return JSONResponse(status_code=404, content={"message": "File not found"})
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to retrieve analysis: {e}")
+
+
+@app.delete("/delete/{pdf_name}")
+def delete_pdf_entry(pdf_name: str):
+    try:
+        if delete_pdf_entry_from_db(pdf_name):
+            return {"message": f"File {pdf_name} deleted successfully"}
+        else:
+            raise HTTPException(status_code=404, detail="File not found")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to delete file: {e}")
 
 
 # Add CORS middleware
