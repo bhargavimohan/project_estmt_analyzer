@@ -23,8 +23,8 @@ INSERT INTO main_categories (main_category) VALUES ('Subscriptions');
 INSERT INTO main_categories (main_category) VALUES ('E-provisions');
 INSERT INTO main_categories (main_category) VALUES ('Cash-transfers');
 INSERT INTO main_categories (main_category) VALUES ('Food-orders');
-INSERT INTO main_categories (main_category) VALUES ('Others');
 INSERT INTO main_categories (main_category) VALUES ('Social-media');
+INSERT INTO main_categories (main_category) VALUES ('Others');
 
 
 -- Insert rows into sub_categories table

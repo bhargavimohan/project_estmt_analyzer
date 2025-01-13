@@ -1,7 +1,6 @@
 import pdfplumber
 import json
 import os
-from sqlalchemy import func
 from db_manager import (
     entry_exists_in_database,
     get_sub_category,

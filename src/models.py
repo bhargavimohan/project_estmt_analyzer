@@ -8,9 +8,7 @@ from sqlalchemy import (
 )
 import datetime
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, scoped_session, relationship
-
-# from sqlalchemy.sql import func
+from sqlalchemy.orm import sessionmaker, scoped_session
 
 
 Base = declarative_base()

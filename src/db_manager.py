@@ -6,7 +6,7 @@ from models import (
 )
 from datetime import datetime
 import re
-from sqlalchemy.sql import func, extract
+from sqlalchemy.sql import extract
 
 WORD_BOUNDARY = r"\b([A-Za-z]+)"
 

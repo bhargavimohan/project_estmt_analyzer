@@ -77,7 +77,7 @@ async def get_analyzed_pdfs_list(
     try:
         items = get_analyzed_pdfs_list_from_db(year)
         if len(items) == 0:
-            return JSONResponse(content={"message": "No PDFs analyzed in this year!"})
+            return JSONResponse(content={"message": "No PDFs analyzed"})
         return {"items": items}
     except Exception as e:
         raise HTTPException(
