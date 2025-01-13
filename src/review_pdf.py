@@ -154,6 +154,6 @@ def process_pdf(estmnt_file_path):
         print(f"Error processing PDF {estmnt_file_path}: {e}")
 
 
-if __name__ == "__main__":
-    estmnt_file_path = "October 2023.pdf"
-    process_pdf(estmnt_file_path)
+# if __name__ == "__main__":
+#     estmnt_file_path = "October 2023.pdf"
+#     process_pdf(estmnt_file_path)

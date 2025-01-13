@@ -20,8 +20,6 @@ def entry_exists_in_database(estmnt_file_path: str):
     except Exception as e:
         Session.rollback()
         raise e
-    finally:
-        Session.close()
 
 
 def get_sub_category(sub_category_str):
@@ -45,8 +43,6 @@ def get_sub_category(sub_category_str):
     except Exception as e:
         print(f"Error getting sub category for {sub_category_str}: {e}")
         return None
-    finally:
-        Session.close()
 
 
 def save_db_results(estmnt_file_path, output_json):
@@ -57,8 +53,6 @@ def save_db_results(estmnt_file_path, output_json):
         print("Data committed to DB successfully")
     except Exception as e:
         print(f"Error saving results to DB: {e}")
-    finally:
-        Session.close()
 
 
 def get_all_main_categories():
@@ -67,8 +61,6 @@ def get_all_main_categories():
     except Exception as e:
         Session.rollback()
         raise e
-    finally:
-        Session.close()
 
 
 def get_main_category_name(main_category_id):
@@ -81,8 +73,6 @@ def get_main_category_name(main_category_id):
     except Exception as e:
         Session.rollback()
         raise e
-    finally:
-        Session.close()
 
 
 def delete_pdf_entry_from_db(file_name: str):
@@ -96,8 +86,6 @@ def delete_pdf_entry_from_db(file_name: str):
     except Exception as e:
         Session.rollback()
         raise e
-    finally:
-        Session.close()
 
 
 def get_analyzed_pdf_from_db(file_name: str):
@@ -110,8 +98,6 @@ def get_analyzed_pdf_from_db(file_name: str):
     except Exception as e:
         session.rollback()
         raise e
-    finally:
-        session.close()
 
 
 def get_analyzed_pdfs_list_from_db(year: int = None):
@@ -146,5 +132,3 @@ def update_pdf_timestamp(file_name: str, new_timestamp: datetime):
     except Exception as e:
         Session.rollback()
         raise e
-    finally:
-        Session.close()
