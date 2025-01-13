@@ -4,6 +4,7 @@ from models import (
     MainCategory,
     SubCategory,
 )
+from datetime import datetime
 import re
 from sqlalchemy.sql import func, extract
 
@@ -131,3 +132,19 @@ def get_analyzed_pdfs_list_from_db(year: int = None):
     except Exception as e:
         Session.rollback()
         raise e
+
+
+def update_pdf_timestamp(file_name: str, new_timestamp: datetime):
+    try:
+        parsed_timestamp = datetime.strptime(new_timestamp, "%Y-%m-%d")
+        entry = Session.query(Results).filter(Results.file_name == file_name).first()
+        if entry:
+            entry.analyzed_at = parsed_timestamp
+            Session.commit()
+            return True
+        return False
+    except Exception as e:
+        Session.rollback()
+        raise e
+    finally:
+        Session.close()

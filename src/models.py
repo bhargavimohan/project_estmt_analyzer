@@ -6,9 +6,11 @@ from sqlalchemy import (
     ForeignKey,
     DateTime,
 )
+import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session, relationship
-from sqlalchemy.sql import func
+
+# from sqlalchemy.sql import func
 
 
 Base = declarative_base()
@@ -40,6 +42,4 @@ class Results(Base):
     id = Column(Integer, primary_key=True)
     file_name = Column(String(collation="NOCASE"))
     output_json = Column(String(collation="NOCASE"))
-    analyzed_at = Column(
-        DateTime(timezone=True), server_default=func.now()
-    )  # database-side timestamp
+    analyzed_at = Column(DateTime(timezone=True), default=datetime.datetime.now())

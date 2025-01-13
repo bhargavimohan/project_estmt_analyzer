@@ -1,14 +1,16 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException, Query
 from fastapi.responses import JSONResponse
 import aiofiles
+from datetime import datetime
+from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from review_pdf import process_pdf
-from fastapi.middleware.cors import CORSMiddleware
 from db_manager import (
     entry_exists_in_database,
     get_analyzed_pdf_from_db,
     delete_pdf_entry_from_db,
     get_analyzed_pdfs_list_from_db,
+    update_pdf_timestamp,
 )
 
 app = FastAPI()
@@ -17,7 +19,7 @@ pdfs_path = Path("./pdfs")
 pdfs_path.mkdir(exist_ok=True)
 
 
-# Add CORS middleware
+# my front end is running on localhost:4200
 origins = [
     "http://localhost:4200",
 ]
@@ -75,7 +77,7 @@ async def get_analyzed_pdfs_list(
     try:
         items = get_analyzed_pdfs_list_from_db(year)
         if len(items) == 0:
-            return JSONResponse(content={"message": "No PDFs analyzed yet!"})
+            return JSONResponse(content={"message": "No PDFs analyzed in this year!"})
         return {"items": items}
     except Exception as e:
         raise HTTPException(
@@ -83,7 +85,7 @@ async def get_analyzed_pdfs_list(
         )
 
 
-@app.get("/analyze/{pdf_name}")
+@app.get("/analyzed/{pdf_name}")
 def get_analyzed_pdf(pdf_name: str):
     try:
         analysis = get_analyzed_pdf_from_db(pdf_name)
@@ -104,3 +106,20 @@ def delete_pdf_entry(pdf_name: str):
             raise HTTPException(status_code=404, detail="File not found")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to delete file: {e}")
+
+
+@app.patch("/update-timestamp/{file_name}/{timestamp}")
+async def update_timestamp(file_name: str, timestamp: str):
+    try:
+
+        if update_pdf_timestamp(file_name, timestamp):
+            return {"message": f"Timestamp for file {file_name} updated successfully"}
+        else:
+            raise HTTPException(status_code=404, detail="File not found")
+    except ValueError:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid timestamp format. Use 'YYYY-MM-DD'.",
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to update timestamp: {e}")
