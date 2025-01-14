@@ -22,7 +22,7 @@ def entry_exists_in_database(estmnt_file_path: str):
         raise e
 
 
-def get_sub_category(sub_category_str):
+def get_sub_category(sub_category_str: str):
     try:
         sub_category = (
             Session.query(SubCategory)
@@ -45,7 +45,7 @@ def get_sub_category(sub_category_str):
         return None
 
 
-def save_db_results(estmnt_file_path, output_json):
+def save_db_results(estmnt_file_path: str, output_json: str):
     try:
         results = Results(file_name=estmnt_file_path, output_json=output_json)
         Session.add(results)
@@ -63,7 +63,7 @@ def get_all_main_categories():
         raise e
 
 
-def get_main_category_name(main_category_id):
+def get_main_category_name(main_category_id: int):
     try:
         return (
             Session.query(MainCategory)
