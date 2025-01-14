@@ -40,4 +40,4 @@ class Results(Base):
     id = Column(Integer, primary_key=True)
     file_name = Column(String(collation="NOCASE"))
     output_json = Column(String(collation="NOCASE"))
-    analyzed_at = Column(DateTime(timezone=True), default=datetime.datetime.now())
+    analyzed_at = Column(DateTime(timezone=True), default=datetime.datetime.now)
