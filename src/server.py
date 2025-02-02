@@ -20,9 +20,7 @@ pdfs_path.mkdir(exist_ok=True)
 
 
 # my front end is running on localhost:4200
-origins = [
-    "http://localhost:4200",
-]
+origins = ["http://localhost:4200", "https://bimntestfe.azurewebsites.net"]
 
 app.add_middleware(
     CORSMiddleware,
