@@ -4,6 +4,7 @@ import aiofiles
 from datetime import datetime
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
+import uvicorn
 from review_pdf import process_pdf
 from db_manager import (
     entry_exists_in_database,
@@ -121,3 +122,7 @@ async def update_timestamp(file_name: str, timestamp: str):
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to update timestamp: {e}")
+
+
+if __name__ == "__main__":
+    uvicorn.run("server:app", host="0.0.0.0", port=8002, reload=True)
